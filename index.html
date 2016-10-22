@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>The Psychic Game</title>
+</head>
+<body>
+	<h1>The Psychic Game</h1>
+	<div id="game">
+	<p>Guess what letter I'm thinking of</p>
+	</div>
+
+	<!-- set computer choices a-z -->
+	<script type="text/javascript">
+	var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+	// set var for win, loss, guess remaining, and game reset
+	var wins = 0;
+	var losses = 0;
+	var guessLeft = 9;
+	var computerGuess;
+	var gameReset;
+
+	// Randomize compute guess
+	var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)]
+
+	//function to reset guess left counter and generate a new computer choice
+	function gameReset(){
+		guessLeft = 9;
+		computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)]
+		userGuess = ' ';	
+	}
+
+	// player key press function
+	document.onkeyup = function(event) {
+	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+	// ensure player user choices are letters a-z
+	if ((userGuess === 'a') || (userGuess === 'b') || (userGuess === 'c') || (userGuess === 'd') || (userGuess === 'e') || (userGuess === 'f') || (userGuess === 'g') || (userGuess === 'h') || (userGuess === 'i') || (userGuess === 'j') || (userGuess === 'k') || (userGuess === 'l') || (userGuess === 'm') || (userGuess === 'n') || (userGuess === 'o') || (userGuess === 'p') || (userGuess === 'q') || (userGuess === 'r') || (userGuess === 's') || (userGuess === 't') || (userGuess === 'u') || (userGuess === 'v') || (userGuess === 'w') || (userGuess === 'x') || (userGuess === 'y') || (userGuess === 'z')){
+
+
+	// test to detrmine if user won, if so, add win and game will reset. If not, guesses left counter will go down, and afteer 9 wrong guesses a loss is added and game resets
+
+	if (userGuess ===computerGuess){
+			wins++;
+			gameReset();
+		}else if (guessLeft === 1){
+			losses++;
+			gameReset();
+		}else {
+			guessLeft--;	
+	}
+
+	// Display count and guess. Note: I know I couldn't figure out how to get the string of letters, followed by a comma, to show on the screen, followed by a reset. I tried lots of stuff and read lots of W3Schools pages, but couldn't make that happen.
+
+	var html = "<p>Guess what letter I'm thinking of</p>" +
+		"<p>Wins: " + 
+		wins + 
+		"</p>" +
+		"<p>Losses: " + 
+		losses + 
+		"</p>" +
+		"<p>Guess Left: " + 
+		guessLeft + 
+		"</p>"+
+		"<p>Your Guesses So Far: " + 
+		userGuess +
+		"</p>";
+
+	// Put html into game ID
+	document.querySelector('#game').innerHTML = html;
+
+	}	
+	}
+
+
+</script>
+</body>
+</html>
